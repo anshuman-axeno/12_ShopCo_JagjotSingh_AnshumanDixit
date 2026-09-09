@@ -1,0 +1,45 @@
+@use "../../styles/abstracts/variables" as *;
+@use "../../styles/abstracts/mixins" as *;
+
+.hero {
+  height: 45rem;
+  background-image: url("../../assets/images/Rectangle 2.png");
+  background-size: cover;
+  background-position: center;
+
+  &__div {
+    width: 45%;
+    @include flex-center(column, flex-start, $ht1);
+    margin-left: 8%;
+  }
+
+  &__heading {
+    font-size: 4rem;
+    line-height: 1;
+  }
+
+  &__para {
+    margin-top: 0;
+  }
+
+  &__btn {
+    @include button;
+    width: 40%;
+    height: 3rem;
+    border-radius: $round-max;
+    align-self: flex-start;
+  }
+
+  &__image {
+    width: $ninety;
+    margin-top: 5%;
+    margin-bottom: $ht2;
+  }
+
+  &__brands {
+    background-color: $dark;
+    @include flex-between;
+    margin-top: $ten;
+    padding: 5%;
+  }
+}

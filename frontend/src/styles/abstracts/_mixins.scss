@@ -1,0 +1,29 @@
+@use "../abstracts/variables" as *;
+
+
+@mixin flex-center( $direction: row, $justify-content: center, $gap: 20px) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin flex-between($gap: 20px) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $gap;
+}
+
+@mixin container {
+  width: $container-width;
+  margin: 0 auto;
+}
+
+@mixin button($background: $dark, $color: $light) {
+  background-color: $background;
+  color: $color;
+  border: none;
+  cursor: pointer;
+}

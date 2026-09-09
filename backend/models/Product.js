@@ -23,10 +23,12 @@ const productSchema=new mongoose.Schema({
     enum:['active','inactive'],
     default:'active'
   },
-  category:{
-    type:String,
-    required:true
-  },
+  rating: {
+    type: Number,
+    min: 0,
+    max: 5,
+    default: 0
+},
   quantity:{
     type:Number,
     required:true,
