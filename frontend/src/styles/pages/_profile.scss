@@ -1,0 +1,221 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.profile-page {
+  width: $container-width;
+  margin: 2.5rem auto 5rem;
+
+  &__heading {
+    font-family: $font-integral;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: $dark;
+  }
+
+  &__layout {
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-start;
+  }
+
+  // Profile Card
+  &__card {
+    flex: 1;
+    border: 0.0625rem solid $border-color;
+    border-radius: $round2;
+    padding: 2rem;
+    background-color: $light;
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 0.0625rem solid $border-color;
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    margin-bottom: 1.25rem;
+
+    label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: $dark;
+    }
+
+    input, textarea {
+      border: 0.0625rem solid $border-color;
+      border-radius: $round1;
+      padding: 0.75rem 1rem;
+      font-size: 0.9375rem;
+      font-family: $font-satoshi;
+
+      &:disabled {
+        background-color: $cream;
+        cursor: not-allowed;
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 4.5rem;
+    }
+  }
+
+  &__role-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: $round-max;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: $cream;
+    color: $dark;
+    width: fit-content;
+  }
+
+  &__save-btn {
+    @include button;
+    width: $full;
+    padding: 0.75rem 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+
+  &__feedback {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: $round1;
+    font-size: 0.875rem;
+    text-align: center;
+
+    &--success {
+      background-color: $green-light;
+      color: $green-dark;
+    }
+
+    &--error {
+      background-color: $red-light;
+      color: $red-dark;
+    }
+  }
+
+  // Orders Section
+  &__orders-box {
+    flex: 1.6;
+    border: 0.0625rem solid $border-color;
+    border-radius: $round2;
+    padding: 2rem;
+    background-color: $light;
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 0.0625rem solid $border-color;
+    }
+  }
+
+  &__orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  &__order-card {
+    border: 0.0625rem solid $border-color;
+    border-radius: $round1;
+    padding: 1.25rem;
+    transition: all $transition;
+
+    &:hover {
+      border-color: $dark;
+    }
+
+    &-header {
+      @include flex-between;
+      margin-bottom: 0.75rem;
+      font-size: 0.875rem;
+
+      strong {
+        color: $dark;
+      }
+
+      span {
+        color: $gray;
+      }
+    }
+
+    &-status {
+      display: inline-block;
+      padding: 0.25rem 0.625rem;
+      border-radius: $round-max;
+      font-size: 0.75rem;
+      font-weight: 700;
+
+      &--received {
+        background-color: $blue-light;
+        color: $blue-dark;
+      }
+
+      &--packed, &--shipped {
+        background-color: $yellow-light;
+        color: $yellow-dark;
+      }
+
+      &--delivered {
+        background-color: $green-light;
+        color: $green-dark;
+      }
+    }
+
+    &-items {
+      font-size: 0.875rem;
+      color: $gray;
+      margin-bottom: 0.75rem;
+      line-height: 1.5;
+    }
+
+    &-footer {
+      @include flex-between;
+      border-top: 0.0625rem solid $border-color;
+      padding-top: 0.75rem;
+
+      p {
+        font-weight: 700;
+        font-size: 1.125rem;
+        color: $dark;
+      }
+
+      a {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: $dark;
+        text-decoration: underline;
+
+        &:hover {
+          color: $gray;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    width: $ninety;
+
+    &__layout {
+      flex-direction: column;
+    }
+
+    &__card, &__orders-box {
+      width: $full;
+    }
+  }
+}
+

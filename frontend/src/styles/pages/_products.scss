@@ -1,0 +1,340 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.products-page {
+  width: $container-width;
+  margin: 2.5rem auto 5rem;
+
+  &__breadcrumb {
+    font-size: 0.875rem;
+    color: $gray;
+    margin-bottom: 1.5rem;
+
+    a:hover {
+      color: $dark;
+    }
+  }
+
+  &__layout {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  // Filter Sidebar
+  &__sidebar {
+    width: 18rem;
+    flex-shrink: 0;
+    border: 0.0625rem solid $border-color;
+    border-radius: $round2;
+    padding: 1.5rem;
+    background-color: $light;
+
+    &-header {
+      @include flex-between;
+      padding-bottom: 1rem;
+      border-bottom: 0.0625rem solid $border-color;
+      margin-bottom: 1.5rem;
+
+      h3 {
+        font-family: $font-satoshi;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: $dark;
+      }
+
+      button {
+        font-size: 0.8125rem;
+        color: $gray;
+        text-decoration: underline;
+
+        &:hover {
+          color: $dark;
+        }
+      }
+    }
+
+    &-group {
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 0.0625rem solid $border-color;
+
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+
+      h4 {
+        font-family: $font-satoshi;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: $dark;
+      }
+    }
+
+    &-categories {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+
+      button {
+        text-align: left;
+        font-size: 0.9375rem;
+        color: $gray;
+        padding: 0.25rem 0;
+        transition: color $transition;
+
+        &:hover, &.active {
+          color: $dark;
+          font-weight: 700;
+        }
+      }
+    }
+
+    &-price-inputs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      input {
+        width: 45%;
+        border: 0.0625rem solid $border-color;
+        border-radius: $round1;
+        padding: 0.5rem;
+        font-size: 0.875rem;
+        font-family: $font-satoshi;
+      }
+
+      span {
+        color: $gray;
+      }
+    }
+
+    &-availability {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: $dark;
+        cursor: pointer;
+
+        input {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  // Main Listing Section
+  &__main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__topbar {
+    @include flex-between($gap: $ht2);
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+
+    &-left {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+
+      h1 {
+        font-family: $font-integral;
+        font-size: 2rem;
+        color: $dark;
+      }
+
+      span {
+        font-size: 0.875rem;
+        color: $gray;
+      }
+    }
+
+    &-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+
+  &__mobile-filter-btn {
+    display: none;
+    @include button($background: $cream, $color: $dark);
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  &__sort {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: $gray;
+
+    select {
+      border: 0.0625rem solid $border-color;
+      border-radius: $round-max;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      background-color: $light;
+      color: $dark;
+      font-family: $font-satoshi;
+      cursor: pointer;
+    }
+  }
+
+  &__search-bar {
+    margin-bottom: 1.5rem;
+
+    input {
+      width: $full;
+      border: 0.0625rem solid $border-color;
+      border-radius: $round-max;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.9375rem;
+      font-family: $font-satoshi;
+      background-color: $cream;
+
+      &:focus {
+        background-color: $light;
+        border-color: $dark;
+      }
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 4rem 1rem;
+    background-color: $cream;
+    border-radius: $round2;
+
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: $gray;
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      @include button;
+      padding: 0.75rem 2rem;
+    }
+  }
+
+  // Pagination
+  &__pagination {
+    border-top: 0.0625rem solid $border-color;
+    padding-top: 1.75rem;
+    @include flex-between($gap: $ht2);
+
+    &-btn {
+      @include button($background: $light, $color: $dark);
+      border: 0.0625rem solid $border-color;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      border-radius: $round1;
+    }
+
+    &-numbers {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    &-page {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: $round1;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: $gray;
+      transition: all $transition;
+
+      &:hover:not(&--active) {
+        background-color: $cream;
+        color: $dark;
+      }
+
+      &--active {
+        background-color: $dark;
+        color: $light;
+        font-weight: 700;
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    width: $ninety;
+
+    &__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin: 1.5rem auto 3rem;
+
+    &__layout {
+      flex-direction: column;
+    }
+
+    &__sidebar {
+      width: $full;
+      display: none;
+
+      &--open {
+        display: block;
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    &__mobile-filter-btn {
+      display: block;
+    }
+
+    &__topbar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+
+      &-right {
+        width: $full;
+        justify-content: space-between;
+      }
+    }
+
+    &__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    &__pagination {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+}
+

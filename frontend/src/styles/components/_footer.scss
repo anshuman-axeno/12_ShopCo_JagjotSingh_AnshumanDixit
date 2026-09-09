@@ -1,0 +1,225 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.footer {
+  background-color: $cream;
+  position: relative;
+  padding-top: 8rem;
+  margin-top: 6rem;
+
+  &__newsletter {
+    position: absolute;
+    top: -5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: $container-width;
+    background-color: $dark;
+    border-radius: $round3;
+    padding: 2.5rem 4rem;
+
+    @include flex-between($gap: $ht3);
+
+    &-heading {
+      color: $light;
+      font-size: 2.25rem;
+      font-family: $font-integral;
+      line-height: 1.15;
+      max-width: 32rem;
+    }
+
+    &-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      width: 22rem;
+      max-width: $full;
+    }
+
+    &-input-box {
+      background-color: $light;
+      border-radius: $round-max;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      input {
+        width: $full;
+        font-family: $font-satoshi;
+        font-size: 0.9375rem;
+        background: transparent;
+      }
+    }
+
+    &-btn {
+      @include button($background: $light, $color: $dark);
+      border-radius: $round-max;
+      height: 2.75rem;
+      font-weight: 600;
+      font-size: 0.9375rem;
+    }
+  }
+
+  &__main {
+    width: $container-width;
+    margin: 0 auto;
+    padding-bottom: 3rem;
+
+    @include flex-between($gap: $ht4);
+    align-items: flex-start;
+  }
+
+  &__about {
+    max-width: 18rem;
+
+    p {
+      color: $gray;
+      margin: 1.25rem 0 1.75rem;
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+  }
+
+  &__logo {
+    font-family: $font-integral;
+    font-size: 2rem;
+    color: $dark;
+  }
+
+  &__socials {
+    display: flex;
+    gap: 0.75rem;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background-color: $light;
+      border: 0.0625rem solid $border-color;
+      transition: transform $transition;
+
+      &:hover {
+        transform: translateY(-0.125rem);
+      }
+
+      img {
+        width: 1.125rem;
+        height: 1.125rem;
+      }
+    }
+  }
+
+  &__links {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    flex: 1;
+  }
+
+  &__col {
+    h3 {
+      font-family: $font-satoshi;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+      color: $dark;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    li a {
+      color: $gray;
+      font-size: 0.875rem;
+      transition: color $transition;
+
+      &:hover {
+        color: $dark;
+      }
+    }
+  }
+
+  &__bottom {
+    width: $container-width;
+    margin: 0 auto;
+    border-top: 0.0625rem solid $border-color;
+    padding: 1.75rem 0;
+
+    @include flex-between($gap: $ht2);
+
+    p {
+      color: $gray;
+      font-size: 0.875rem;
+    }
+
+    img {
+      height: 1.875rem;
+      width: auto;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    &__newsletter {
+      width: $ninety;
+      padding: 2rem;
+    }
+
+    &__main, &__bottom {
+      width: $ninety;
+    }
+
+    &__links {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding-top: 14rem;
+    margin-top: 8rem;
+
+    &__newsletter {
+      top: -7rem;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 1.5rem;
+      gap: 1.5rem;
+
+      &-heading {
+        font-size: 1.75rem;
+      }
+
+      &-form {
+        width: $full;
+      }
+    }
+
+    &__main {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    &__about {
+      max-width: $full;
+    }
+
+    &__links {
+      width: $full;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &__bottom {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+  }
+}
+

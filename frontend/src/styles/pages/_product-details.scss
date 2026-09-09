@@ -1,0 +1,329 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.product-details {
+  width: $container-width;
+  margin: 2.5rem auto 5rem;
+
+  &__breadcrumb {
+    font-size: 0.875rem;
+    color: $gray;
+    margin-bottom: 2.5rem;
+
+    a:hover {
+      color: $dark;
+    }
+  }
+
+  &__main {
+    display: flex;
+    gap: 3.5rem;
+    margin-bottom: 5rem;
+    align-items: flex-start;
+  }
+
+  // Gallery
+  &__gallery {
+    flex: 1;
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__image-preview {
+    flex: 1;
+    background-color: $cream;
+    border-radius: $round2;
+    aspect-ratio: 1 / 1.1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      max-width: 85%;
+      max-height: 85%;
+      object-fit: contain;
+    }
+  }
+
+  // Info
+  &__info {
+    flex: 1;
+  }
+
+  &__title {
+    font-family: $font-integral;
+    font-size: 2.5rem;
+    line-height: 1.15;
+    color: $dark;
+    margin-bottom: 0.75rem;
+  }
+
+  &__rating {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-bottom: 1rem;
+
+    .stars {
+      height: 1.125rem;
+    }
+
+    span {
+      font-size: 0.9375rem;
+    }
+  }
+
+  &__price-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  &__price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $dark;
+  }
+
+  &__old-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #999;
+    text-decoration: line-through;
+  }
+
+  &__discount {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $red;
+    background-color: $red-light;
+    padding: 0.35rem 0.75rem;
+    border-radius: $round-max;
+  }
+
+  &__description {
+    color: $gray;
+    font-size: 1rem;
+    line-height: 1.6;
+    padding-bottom: 1.5rem;
+    border-bottom: 0.0625rem solid $border-color;
+    margin-bottom: 1.5rem;
+  }
+
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9375rem;
+
+    &-row {
+      display: flex;
+      gap: 0.75rem;
+
+      strong {
+        color: $dark;
+        min-width: 7rem;
+      }
+
+      span {
+        color: $gray;
+      }
+    }
+
+    &-badge {
+      display: inline-block;
+      font-weight: 700;
+      font-size: 0.8125rem;
+      padding: 0.2rem 0.625rem;
+      border-radius: $round-max;
+
+      &--in-stock {
+        background-color: $green-light;
+        color: $green-dark;
+      }
+
+      &--out-of-stock {
+        background-color: $red-light;
+        color: $red-dark;
+      }
+
+      &--low-stock {
+        background-color: $yellow-light;
+        color: $yellow-dark;
+      }
+    }
+  }
+
+  // Color selection
+  &__section {
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 0.0625rem solid $border-color;
+
+    h4 {
+      font-family: $font-satoshi;
+      font-size: 0.9375rem;
+      color: $gray;
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  &__colors {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  &__color-btn {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    position: relative;
+    border: 0.0625rem solid rgba(0, 0, 0, 0.1);
+
+    &.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: $light;
+      font-size: 0.875rem;
+      font-weight: 700;
+    }
+  }
+
+  // Sizes
+  &__sizes {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  &__size-btn {
+    padding: 0.625rem 1.375rem;
+    border-radius: $round-max;
+    background-color: $cream;
+    color: $gray;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all $transition;
+
+    &:hover {
+      background-color: #e5e5e5;
+      color: $dark;
+    }
+
+    &.selected {
+      background-color: $dark;
+      color: $light;
+    }
+  }
+
+  // Actions
+  &__actions {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+  }
+
+  &__qty-box {
+    display: flex;
+    align-items: center;
+    background-color: $cream;
+    border-radius: $round-max;
+    padding: 0.5rem 1.25rem;
+    gap: 1.25rem;
+
+    button {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $dark;
+      padding: 0.25rem 0.5rem;
+
+      &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+    }
+
+    span {
+      font-size: 1rem;
+      font-weight: 700;
+      min-width: 1.5rem;
+      text-align: center;
+    }
+  }
+
+  &__add-btn {
+    @include button;
+    flex: 1;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+
+    &--disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+  }
+
+  &__feedback {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: $round1;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    &--success {
+      background-color: $green-light;
+      color: $green-dark;
+    }
+
+    &--error {
+      background-color: $red-light;
+      color: $red-dark;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    width: $ninety;
+
+    &__main {
+      gap: 2rem;
+    }
+
+    &__title {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin: 1.5rem auto 3rem;
+
+    &__main {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    &__gallery {
+      width: $full;
+    }
+
+    &__title {
+      font-size: 1.75rem;
+    }
+
+    &__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &__qty-box {
+      justify-content: space-between;
+    }
+  }
+}
+

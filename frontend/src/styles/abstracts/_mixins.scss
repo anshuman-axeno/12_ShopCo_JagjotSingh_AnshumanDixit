@@ -1,7 +1,6 @@
 @use "../abstracts/variables" as *;
 
-
-@mixin flex-center( $direction: row, $justify-content: center, $gap: 20px) {
+@mixin flex-center($direction: row, $justify-content: center, $gap: $ht2) {
   display: flex;
   flex-direction: $direction;
   justify-content: $justify-content;
@@ -9,7 +8,7 @@
   gap: $gap;
 }
 
-@mixin flex-between($gap: 20px) {
+@mixin flex-between($gap: $ht2) {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -26,4 +25,37 @@
   color: $color;
   border: none;
   cursor: pointer;
+  border-radius: $round-max;
+  font-family: $font-satoshi;
+  font-weight: 500;
+  transition: all $transition;
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-0.0625rem);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Responsive Mixins
+@mixin mobile {
+  @media (max-width: $bp-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $bp-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $bp-tablet) {
+    @content;
+  }
 }

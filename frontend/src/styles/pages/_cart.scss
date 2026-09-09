@@ -1,0 +1,299 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.cart-page {
+  width: $container-width;
+  margin: 2.5rem auto 5rem;
+
+  &__breadcrumb {
+    font-size: 0.875rem;
+    color: $gray;
+    margin-bottom: 1.5rem;
+
+    a:hover {
+      color: $dark;
+    }
+  }
+
+  &__heading {
+    font-family: $font-integral;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: $dark;
+  }
+
+  &__layout {
+    display: flex;
+    gap: 1.75rem;
+    align-items: flex-start;
+  }
+
+  // Cart Items List
+  &__items-box {
+    flex: 1.4;
+    border: 0.0625rem solid $border-color;
+    border-radius: $round2;
+    padding: 1.5rem;
+    background-color: $light;
+  }
+
+  &__item {
+    display: flex;
+    gap: 1.25rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 0.0625rem solid $border-color;
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &__item-img-wrapper {
+    width: 6.5rem;
+    height: 6.5rem;
+    border-radius: $round1;
+    background-color: $cream;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 85%;
+      height: 85%;
+      object-fit: contain;
+    }
+  }
+
+  &__item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__item-header {
+    @include flex-between;
+    align-items: flex-start;
+
+    h3 {
+      font-family: $font-satoshi;
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: $dark;
+    }
+  }
+
+  &__delete-btn {
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity $transition;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__item-meta {
+    font-size: 0.875rem;
+    color: $gray;
+    margin: 0.25rem 0;
+
+    span {
+      color: $dark;
+      font-weight: 500;
+    }
+  }
+
+  &__item-footer {
+    @include flex-between;
+    margin-top: 0.5rem;
+  }
+
+  &__item-price {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: $dark;
+  }
+
+  &__qty-control {
+    display: flex;
+    align-items: center;
+    background-color: $cream;
+    border-radius: $round-max;
+    padding: 0.35rem 0.875rem;
+    gap: 0.875rem;
+
+    button {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: $dark;
+      line-height: 1;
+
+      &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+    }
+
+    span {
+      font-size: 0.875rem;
+      font-weight: 700;
+      min-width: 1.25rem;
+      text-align: center;
+    }
+  }
+
+  // Order Summary Box
+  &__summary {
+    flex: 1;
+    border: 0.0625rem solid $border-color;
+    border-radius: $round2;
+    padding: 1.75rem;
+    background-color: $light;
+
+    h3 {
+      font-family: $font-satoshi;
+      font-size: 1.375rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: $dark;
+    }
+  }
+
+  &__row {
+    @include flex-between;
+    font-size: 1rem;
+    color: $gray;
+    margin-bottom: 1rem;
+
+    span:last-child {
+      color: $dark;
+      font-weight: 700;
+    }
+
+    &--discount span:last-child {
+      color: $red;
+    }
+
+    &--total {
+      border-top: 0.0625rem solid $border-color;
+      padding-top: 1.25rem;
+      margin-top: 1.25rem;
+      margin-bottom: 1.75rem;
+      color: $dark;
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+  }
+
+  &__promo-box {
+    display: flex;
+    gap: 0.625rem;
+    margin-bottom: 1.25rem;
+
+    input {
+      flex: 1;
+      border: 0.0625rem solid $border-color;
+      border-radius: $round-max;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.875rem;
+      font-family: $font-satoshi;
+      background-color: $cream;
+
+      &:focus {
+        background-color: $light;
+      }
+    }
+
+    button {
+      @include button;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.875rem;
+    }
+  }
+
+  &__coupon-msg {
+    font-size: 0.8125rem;
+    margin-bottom: 1rem;
+
+    &--success {
+      color: $green;
+    }
+
+    &--error {
+      color: $red;
+    }
+  }
+
+  &__checkout-btn {
+    @include button;
+    display: block;
+    width: $full;
+    padding: 1rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 5rem 1rem;
+    background-color: $cream;
+    border-radius: $round2;
+
+    h3 {
+      font-family: $font-integral;
+      font-size: 1.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      color: $gray;
+      margin-bottom: 2rem;
+    }
+
+    a {
+      @include button;
+      display: inline-block;
+      padding: 0.875rem 2.5rem;
+      font-weight: 600;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    width: $ninety;
+
+    &__layout {
+      flex-direction: column;
+    }
+
+    &__items-box, &__summary {
+      width: $full;
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin: 1.5rem auto 3rem;
+
+    &__heading {
+      font-size: 1.75rem;
+    }
+
+    &__item {
+      gap: 0.875rem;
+    }
+
+    &__item-img-wrapper {
+      width: 5rem;
+      height: 5rem;
+    }
+  }
+}
+

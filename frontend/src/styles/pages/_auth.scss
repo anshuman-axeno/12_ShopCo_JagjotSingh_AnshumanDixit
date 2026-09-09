@@ -1,0 +1,101 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 3rem 1rem;
+
+  &__card {
+    width: 28rem;
+    max-width: $full;
+    background-color: $light;
+    border: 0.0625rem solid $border-color;
+    border-radius: $round2;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.05);
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      font-family: $font-integral;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: $dark;
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: $gray;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+
+    label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: $dark;
+    }
+
+    input, textarea {
+      border: 0.0625rem solid $border-color;
+      border-radius: $round1;
+      padding: 0.75rem 1rem;
+      font-size: 0.9375rem;
+      font-family: $font-satoshi;
+      transition: border-color $transition;
+
+      &:focus {
+        border-color: $dark;
+      }
+    }
+  }
+
+  &__submit-btn {
+    @include button;
+    width: $full;
+    padding: 0.875rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+
+  &__footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    color: $gray;
+
+    a {
+      color: $dark;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+  }
+
+  &__error {
+    padding: 0.75rem 1rem;
+    background-color: $red-light;
+    color: $red-dark;
+    border-radius: $round1;
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+}
+

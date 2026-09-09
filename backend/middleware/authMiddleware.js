@@ -2,9 +2,11 @@ const jwt=require('jsonwebtoken');
 
 const authMiddleware=(req,res,next)=>{
 
-  const token=req.headers.authorization;
+  const authHeader = req.headers.authorization;
 
-  if(!token) return res.status(401).json({message:"Error.No Token Provided"})
+  if (!authHeader) return res.status(401).json({ message: "Error.No Token Provided" });
+
+  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : authHeader;
 
   try{
     const decoded=jwt.verify(token, process.env.JWT_SECRET);

@@ -1,3 +1,70 @@
-body{
-  box-sizing: border-box;
+@use "../abstracts/variables" as *;
+
+@font-face {
+  font-family: 'Integral CF';
+  src: url('/assets/fonts/Fontspring-DEMO-integralcf-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Integral CF';
+  src: url('/assets/fonts/Fontspring-DEMO-integralcf-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/assets/fonts/Satoshi-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: $font-satoshi;
+  color: $dark;
+  background-color: $light;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .font-integral {
+  font-family: $font-integral;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+// App shell layout
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
+// Global utility classes
+.container {
+  width: $container-width;
+  margin: 0 auto;
+
+  @media (max-width: $bp-tablet) {
+    width: $ninety;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }

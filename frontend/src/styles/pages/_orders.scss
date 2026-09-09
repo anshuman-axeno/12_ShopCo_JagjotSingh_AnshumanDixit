@@ -1,0 +1,228 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.order-details-page {
+  width: $container-width;
+  margin: 2.5rem auto 5rem;
+
+  &__back {
+    display: inline-block;
+    font-size: 0.875rem;
+    color: $gray;
+    margin-bottom: 1.5rem;
+    text-decoration: underline;
+
+    &:hover {
+      color: $dark;
+    }
+  }
+
+  &__header {
+    @include flex-between($gap: $ht2);
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+
+    h1 {
+      font-family: $font-integral;
+      font-size: 2rem;
+      color: $dark;
+    }
+  }
+
+  &__badge {
+    padding: 0.35rem 0.875rem;
+    border-radius: $round-max;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    &--received {
+      background-color: $blue-light;
+      color: $blue-dark;
+    }
+
+    &--packed, &--shipped {
+      background-color: $yellow-light;
+      color: $yellow-dark;
+    }
+
+    &--delivered {
+      background-color: $green-light;
+      color: $green-dark;
+    }
+  }
+
+  // Timeline
+  &__timeline {
+    background-color: $cream;
+    border-radius: $round2;
+    padding: 2rem 1.5rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 2.85rem;
+      left: 3rem;
+      right: 3rem;
+      height: 0.125rem;
+      background-color: $border-dark;
+      z-index: 1;
+    }
+
+    &-step {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: center;
+
+      span {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: $gray;
+      }
+
+      &--done, &--current {
+        .order-details-page__timeline-circle {
+          background-color: $dark;
+          color: $light;
+          border-color: $dark;
+        }
+
+        span {
+          color: $dark;
+          font-weight: 700;
+        }
+      }
+    }
+
+    &-circle {
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      background-color: $light;
+      border: 0.125rem solid $border-dark;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: $gray;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 2rem;
+  }
+
+  &__card {
+    border: 0.0625rem solid $border-color;
+    border-radius: $round2;
+    padding: 2rem;
+    background-color: $light;
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 0.0625rem solid $border-color;
+    }
+  }
+
+  // Items table
+  &__item-row {
+    @include flex-between;
+    padding: 1rem 0;
+    border-bottom: 0.0625rem solid $border-color;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      strong {
+        font-size: 1rem;
+        color: $dark;
+      }
+
+      span {
+        font-size: 0.8125rem;
+        color: $gray;
+      }
+    }
+
+    p {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: $dark;
+    }
+  }
+
+  &__summary-row {
+    @include flex-between;
+    font-size: 0.9375rem;
+    color: $gray;
+    margin-bottom: 0.75rem;
+
+    span:last-child {
+      color: $dark;
+      font-weight: 700;
+    }
+
+    &--total {
+      border-top: 0.0625rem solid $border-color;
+      padding-top: 1rem;
+      margin-top: 1rem;
+      font-size: 1.25rem;
+      color: $dark;
+      font-weight: 700;
+    }
+  }
+
+  &__shipping-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.9375rem;
+
+    p strong {
+      color: $dark;
+      display: inline-block;
+      min-width: 6rem;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    width: $ninety;
+
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__timeline {
+      overflow-x: auto;
+      gap: 2rem;
+      justify-content: flex-start;
+
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
+
