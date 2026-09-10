@@ -22,7 +22,7 @@ function CheckoutPage() {
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
 
-  // Prefill shipping info from user profile
+  // get  shipping info from user profile
   useEffect(() => {
     if (user) {
       setFormData({
@@ -33,7 +33,7 @@ function CheckoutPage() {
     }
   }, [user]);
 
-  // If cart is empty, redirect back to cart
+  // If cart is empty, back to cart
   if (cart.length === 0) {
     return (
       <div className="container checkout-page__empty">

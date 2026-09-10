@@ -204,7 +204,7 @@ function ProductListingPage() {
     [totalPages, setSearchParams]
   );
 
-  // Active filters count with useMemo
+  // Active FIlters count
   const activeFiltersCount = useMemo(() => {
     let count = 0;
     if (currentCategory) count++;

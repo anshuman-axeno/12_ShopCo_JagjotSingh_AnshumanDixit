@@ -18,7 +18,6 @@ const request = async (endpoint, options = {}) => {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      // 404 for empty categories or orders is handled gracefully
       const error = new Error(data.message || 'Network request failed');
       error.status = response.status;
       error.data = data;

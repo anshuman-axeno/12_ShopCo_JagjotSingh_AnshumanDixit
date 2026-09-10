@@ -106,25 +106,25 @@ function AdminCategories() {
           <tbody>
             {categories.map((cat) => (
               <tr key={cat._id}>
-                <td className="admin-layout__table-id">{cat._id}</td>
-                <td>
-                  <strong>{cat.name}</strong>
-                </td>
-                <td>
-                  <button
-                    className="admin-layout__action-btn admin-layout__action-btn--edit"
-                    onClick={() => openEditModal(cat)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="admin-layout__action-btn admin-layout__action-btn--delete"
-                    onClick={() => handleDelete(cat._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
+              <td className="admin-layout__table-id">{cat._id}</td>
+              <td>
+                <strong>{cat.name}</strong>
+              </td>
+              <td>
+                <button
+                  className="admin-layout__action-btn admin-layout__action-btn--edit"
+                  onClick={() => openEditModal(cat)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="admin-layout__action-btn admin-layout__action-btn--delete"
+                  onClick={() => handleDelete(cat._id)}
+                >
+                  Delete
+                </button>
+          </td>
+        </tr>
             ))}
           </tbody>
         </table>
