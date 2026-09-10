@@ -6,7 +6,7 @@ const authMiddleware=(req,res,next)=>{
 
   if (!authHeader) return res.status(401).json({ message: "Error.No Token Provided" });
 
-  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : authHeader;
+  const token = authHeader;
 
   try{
     const decoded=jwt.verify(token, process.env.JWT_SECRET);

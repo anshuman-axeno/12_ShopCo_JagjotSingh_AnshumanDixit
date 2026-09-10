@@ -4,7 +4,7 @@ const request = async (endpoint, options = {}) => {
   const token = localStorage.getItem('token');
   const headers = {
     'Content-Type': 'application/json',
-    ...(token && { Authorization: `Bearer ${token}` }),
+    ...(token && { Authorization: token }),
     ...options.headers,
   };
 

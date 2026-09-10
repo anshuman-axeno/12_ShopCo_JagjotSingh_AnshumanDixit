@@ -17,6 +17,8 @@ const productSchema=new mongoose.Schema({
   },
   images:[{
     type:String,
+    required:true,
+
   }],
   status:{
     type: String,
@@ -32,8 +34,8 @@ const productSchema=new mongoose.Schema({
   quantity:{
     type:Number,
     required:true,
-    default:0,
-    min:0,
+    default:1,
+    min:1,
   },
   category:{
     type:mongoose.Schema.Types.ObjectId,
