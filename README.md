@@ -7,22 +7,17 @@ A modern, responsive full-stack e-commerce application built with React 19, Vite
 ## Quick Start
 
 1. Backend Setup
-```bash
 cd backend
 npm install
 npm run start   # Starts on port 5000
 ```
 To seed sample products, categories, admin, and customer users:
-```bash
 node seed.js
-```
 
 ### 2. Frontend Setup
-```bash
 cd frontend
 npm install
-npm run dev     # Starts Vite development server
-```
+npm run dev     
 
 ### 3. Demo Credentials
 - **Admin Account**:
