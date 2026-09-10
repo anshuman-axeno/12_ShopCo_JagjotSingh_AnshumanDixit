@@ -12,22 +12,18 @@ function BrowseStyle() {
 
         <div className="browse-styles__row browse-styles__row--top">
           <Link to="/products?categoryName=Casual" className="browse-styles__card">
-            <span>Casual</span>
             <img src={browseCasual} alt="Casual fashion" loading="lazy" />
           </Link>
           <Link to="/products?categoryName=Formal" className="browse-styles__card">
-            <span>Formal</span>
             <img src={browseFormal} alt="Formal fashion" loading="lazy" />
           </Link>
         </div>
 
         <div className="browse-styles__row browse-styles__row--bottom">
           <Link to="/products?categoryName=Party" className="browse-styles__card">
-            <span>Party</span>
             <img src={browseParty} alt="Party fashion" loading="lazy" />
           </Link>
           <Link to="/products?categoryName=Gym" className="browse-styles__card">
-            <span>Gym</span>
             <img src={browseGym} alt="Gym & Workout fashion" loading="lazy" />
           </Link>
         </div>

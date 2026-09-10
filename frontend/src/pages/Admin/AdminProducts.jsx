@@ -9,6 +9,7 @@ function AdminProducts() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [error, setError] = useState('');
+  const [uploadError, setUploadError] = useState('');
   const [saving, setSaving] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -43,6 +44,7 @@ function AdminProducts() {
 
   const openAddModal = () => {
     setEditingProduct(null);
+    setUploadError('');
     setFormData({
       name: '',
       description: '',
@@ -50,13 +52,14 @@ function AdminProducts() {
       quantity: '10',
       category: categories[0]?._id || '',
       status: 'active',
-      image: '/assets/images/tshirt1.png',
+      image: '',
     });
     setModalOpen(true);
   };
 
   const openEditModal = (product) => {
     setEditingProduct(product);
+    setUploadError('');
     setFormData({
       name: product.name,
       description: product.description,
@@ -64,9 +67,59 @@ function AdminProducts() {
       quantity: String(product.quantity),
       category: product.category?._id || product.category || '',
       status: product.status || 'active',
-      image: product.images?.[0] || '/assets/images/tshirt1.png',
+      image: product.images?.[0] || '',
     });
     setModalOpen(true);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    setUploadError('');
+
+    // Supported formats: jpg, jpeg, png, webp, avif
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.avif'];
+    const allowedMimeTypes = [
+      'image/jpeg',
+      'image/jpg',
+      'image/png',
+      'image/webp',
+      'image/avif',
+    ];
+
+    const fileName = file.name.toLowerCase();
+    const hasValidExt = allowedExtensions.some((ext) => fileName.endsWith(ext));
+    const hasValidMime = allowedMimeTypes.includes(file.type);
+
+    if (!hasValidExt && !hasValidMime) {
+      setUploadError('Invalid format. Please upload JPG, JPEG, PNG, WEBP, or AVIF.');
+      return;
+    }
+
+    // Limit to 5MB
+    const maxSizeBytes = 5 * 1024 * 1024;
+    if (file.size > maxSizeBytes) {
+      setUploadError('Image size exceeds 5MB limit. Please choose a smaller file.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (uploadEvent) => {
+      setFormData((prev) => ({
+        ...prev,
+        image: uploadEvent.target.result,
+      }));
+    };
+    reader.onerror = () => {
+      setUploadError('Failed to read image file from your PC.');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    setFormData((prev) => ({ ...prev, image: '' }));
+    setUploadError('');
   };
 
   const handleDelete = async (id) => {
@@ -97,13 +150,23 @@ function AdminProducts() {
 
       if (editingProduct) {
         const res = await api.products.update(editingProduct._id, payload);
+        const catObj = categories.find((c) => c._id === (res.product?.category?._id || res.product?.category));
+        const updated = {
+          ...res.product,
+          category: catObj || res.product?.category,
+        };
         setProducts((prev) =>
-          prev.map((p) => (p._id === editingProduct._id ? res.product : p))
+          prev.map((p) => (p._id === editingProduct._id ? updated : p))
         );
       } else {
         const res = await api.products.create(payload);
         if (res.newProduct) {
-          setProducts((prev) => [res.newProduct, ...prev]);
+          const catObj = categories.find((c) => c._id === (res.newProduct?.category?._id || res.newProduct?.category));
+          const created = {
+            ...res.newProduct,
+            category: catObj || res.newProduct?.category,
+          };
+          setProducts((prev) => [created, ...prev]);
         }
       }
 
@@ -279,13 +342,55 @@ function AdminProducts() {
               </div>
 
               <div className="admin-layout__form-field">
-                <label>Image URL Path</label>
-                <input
-                  type="text"
-                  value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  placeholder="/assets/images/tshirt1.png"
-                />
+                <label>Product Image (Upload from PC or enter URL)</label>
+
+                {formData.image ? (
+                  <div className="admin-layout__upload-preview">
+                    <img src={formData.image} alt="Product Preview" />
+                    <button
+                      type="button"
+                      className="admin-layout__upload-preview-remove"
+                      onClick={handleRemoveImage}
+                      title="Remove Image"
+                      aria-label="Remove Image"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ) : (
+                  <label className="admin-layout__upload-dropzone">
+                    <input
+                      type="file"
+                      accept=".jpg,.jpeg,.png,.webp,.avif,image/jpeg,image/png,image/webp,image/avif"
+                      onChange={handleFileChange}
+                    />
+                    <p>📁 Click to upload image from PC</p>
+                    <span>Supports JPG, JPEG, PNG, WEBP, AVIF (Max 5MB)</span>
+                  </label>
+                )}
+
+                {uploadError && (
+                  <p style={{ color: '#b91c1c', fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                    {uploadError}
+                  </p>
+                )}
+
+                <div style={{ marginTop: '0.5rem' }}>
+                  <label style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+                    {formData.image && formData.image.startsWith('data:image')
+                      ? 'Image loaded from your PC (Base64). Click ✕ to change or remove.'
+                      : 'Or enter image URL path directly:'}
+                  </label>
+                  {(!formData.image || !formData.image.startsWith('data:image')) && (
+                    <input
+                      type="text"
+                      value={formData.image}
+                      onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                      placeholder="e.g. /assets/images/tshirt1.png"
+                      style={{ marginTop: '0.25rem', fontSize: '0.8125rem' }}
+                    />
+                  )}
+                </div>
               </div>
 
               <div className="admin-layout__modal-actions">
