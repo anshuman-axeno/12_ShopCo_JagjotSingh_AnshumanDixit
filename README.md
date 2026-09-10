@@ -6,7 +6,7 @@ A modern, responsive full-stack e-commerce application built with React 19, Vite
 
 ## Quick Start
 
-### 1. Backend Setup
+1. Backend Setup
 ```bash
 cd backend
 npm install
@@ -32,96 +32,82 @@ npm run dev     # Starts Vite development server
   - Email: `anshuman@example.com`
   - Password: `customer123`
 
----
+# SHOP.CO
 
-## Features & Pages
+SHOP.CO is a full-stack e-commerce website built using the MERN stack.
 
-- **Home**: Hero with stats counter, New Arrivals, Top Selling, Browse by Dress Style, Customer Reviews, and Newsletter signup.
-- **Categories**: Dedicated categories view loaded from MongoDB with direct links to filtered catalog.
-- **Product Listing**:
-  - Debounced name search (case-insensitive, partial matching).
-  - Category, Price range, and Availability filters (In Stock / Out of Stock).
-  - Multi-criteria sorting (Price low-to-high, high-to-low, Newest, Name).
-  - Server-side pagination with automatic page resets on filter/search updates.
-- **Product Details**:
-  - Image gallery, product description, rating, price and discount calculation.
-  - Stock availability and inventory states (In Stock, Low Stock, and Out of Stock).
-  - Color and size selection.
-  - Quantity selector respecting inventory stock.
-  - Out of stock state disables purchasing.
-  - Related product recommendations ("You Might Also Like").
-- **Cart**:
-  - Quantity adjustments with inventory clamping.
-  - Promo code discounts: `SAVE10` (10% discount) and `SAVE20` (20% discount).
-  - Subtotal, discount amount, flat delivery fee, and final total calculated with `useMemo`.
-- **Checkout**:
-  - Protected route requiring authentication.
-  - Shipping address pre-fill and validation.
-  - Backend order total calculation and verification.
-  - Inventory decremented atomically in MongoDB upon successful checkout.
-  - Automatic cart clearing.
-- **Authentication**:
-  - JWT token stored in localStorage for persistent sessions across page refreshes.
-  - Customer vs Admin role protection.
-- **Profile & Order History**:
-  - Profile details viewer and editor (Name, Phone, Delivery Address). Role is protected and read-only.
-  - Order history showing order ID, placement date, items, quantities, totals, and order status.
-- **Order Details**:
-  - Visual status progress timeline (`Order received` → `Packed` → `Shipped` → `Out for Delivery` → `Delivered`).
-  - Purchased products line items and delivery recipient details.
-- **Admin Panel**:
-  - **Dashboard**: High-level store metrics (Total Products, Categories, Users, Orders, Out of Stock, Low Stock).
-  - **Products**: Complete product CRUD, stock updates, category assignment, and stock alerts.
-  - **Categories**: Category CRUD management.
-  - **Orders**: View all customer orders and live update order progress statuses.
+## Tech Stack
 
----
+- MongoDB - Database
+- Express.js - Backend framework
+- React.js - Frontend framework
+- Node.js - Backend runtime
+- Vite - Frontend development tool
+- SCSS - Styling
 
-## Inventory & Low Stock Logic
+## Features
 
-- **Out of Stock**: `quantity === 0`. The product display shows a prominent `OUT OF STOCK` badge, disables the "Add to Cart" button, sets the quantity selector to 0, and disallows checkout.
-- **Low Stock Threshold**: `quantity <= 10 && quantity > 0`.
-  - In the customer-facing views, products display an attention badge (e.g. `Only 4 left`).
-  - In the Admin Panel, the dashboard computes low-stock counts via `Product.countDocuments({ quantity: { $lte: 10, $gt: 0 } })`.
-  - The admin dashboard highlights an **Inventory Attention Required** warning banner whenever any product has reached low stock or out of stock, allowing immediate restocking.
+### User Features
 
----
+- Signup and login
+- Browse products
+- Search and filter products
+- Sort products
+- View product details
+- Add products to cart
+- Update and remove cart items
+- Apply discount coupons
+- Place orders
+- View order history
+- Track order status
+- Update profile details
 
-## React Performance Optimizations
+### Admin Features
 
-1. **`useMemo`**:
-   - `CartContext`: Memoizes `subtotal`, `discountPercent`, `discountAmount`, `deliveryFee`, `total`, and `totalItems` so that calculations only run when cart contents or coupon code changes.
-   - `ProductListingPage`: Memoizes the count of active filters and composite query parameters.
-   - `AdminDashboard`: Memoizes computed inventory statistics.
-2. **`useCallback`**:
-   - Stable references for handlers like `addToCart`, `updateQuantity`, `removeFromCart`, `applyCoupon`, `handleCategorySelect`, `handleSortChange`, and `handlePriceApply` to avoid child component re-renders.
-3. **`React.memo`**:
-   - Wrapped `ProductCard`, preventing all product grid cards from re-rendering when parent state (such as search bar typing) changes.
-4. **Lazy Loading & Route-level Code Splitting**:
-   - `React.lazy()` and `<Suspense>` used across all non-landing routes: Categories, Product Listing, Product Details, Cart, Checkout, Auth, Profile, Order Details, and the entire Admin suite (`AdminLayout`, `AdminDashboard`, `AdminProducts`, `AdminCategories`, `AdminOrders`).
-   - Admin code is completely decoupled from the customer bundle, keeping the initial payload minimal.
+- Admin dashboard
+- Add, edit, and delete products
+- Upload product images
+- Manage categories
+- View customer orders
+- Update order status
+- Check low-stock and out-of-stock products
 
----
+## Backend
 
-## Core Web Vitals (CWV) Optimizations
+The backend is built using Node.js and Express.js.
 
-1. **Largest Contentful Paint (LCP)**:
-   - Font loading with `@font-face` uses `font-display: swap` for Satoshi and Integral CF, ensuring fast text rendering without invisible text during font loading.
-   - Hero banner and above-the-fold assets are served with native responsive styling.
-2. **Cumulative Layout Shift (CLS)**:
-   - All product card image containers have explicit aspect ratios (`aspect-ratio: 1 / 1.05`) preventing layout jumps when images load.
-   - Fixed header heights and stable grid layouts avoid layout shifts during API data fetching.
-3. **Interaction to Next Paint (INP)**:
-   - Search bar input uses a **350ms debounce** to ensure keystrokes respond instantaneously without firing rapid network requests or freezing the main thread.
-   - Heavy state operations (such as cart updates) use lightweight local state before propagating changes.
+It provides APIs that connect the React frontend with the MongoDB database. The backend handles users, products, categories, orders, authentication, and admin operations.
 
----
+The main API sections are:
 
-## SCSS Architecture
+- `/api/auth` - Signup and login
+- `/api/products` - Product operations
+- `/api/categories` - Category operations
+- `/api/orders` - Checkout and orders
+- `/api/users` - User profile operations
+- `/api/admin` - Admin operations
 
-- **Abstracts**: `_variables.scss` (rems, percentages, colors, fonts, breakpoints) and `_mixins.scss` (flexbox, buttons, responsive media queries).
-- **Base**: `_reset.scss` and `_base.scss` (typography, font faces, global containers).
-- **Components**: `_navbar.scss`, `_footer.scss`, `_product-card.scss`, `_spinner.scss`.
-- **Pages**: `_home.scss`, `_categories.scss`, `_products.scss`, `_product-details.scss`, `_cart.scss`, `_checkout.scss`, `_auth.scss`, `_profile.scss`, `_orders.scss`, `_admin.scss`.
-- Zero hardcoded pixel values for layout and spacing; uses semantic rems and percentages throughout.
+MongoDB is used to store the application data. Mongoose is used to work with MongoDB from the Node.js application.
 
+The main data stored in the database includes:
+
+- Users
+- Products
+- Categories
+- Orders
+
+Authentication is handled using JWT. After login, the server creates a token for the user. This token is sent with requests that require login.
+
+Passwords are protected using bcrypt before being stored in the database.
+
+The backend also checks user roles. Normal users can access customer features, while admin users can access admin features.
+
+The checkout API checks product stock before creating an order and updates the available quantity after a successful purchase.
+
+The backend also validates coupon codes so that users cannot simply change the discount amount from the frontend.
+
+## Database
+
+The project uses MongoDB Atlas or a local MongoDB database.
+
+The MongoDB connection is configured using environment variables.
