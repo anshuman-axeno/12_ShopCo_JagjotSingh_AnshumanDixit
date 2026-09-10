@@ -81,7 +81,12 @@
 
     .stars {
       height: 1.125rem;
+      height: 1.1875rem;
       width: auto;
+      max-width: 6.5rem;
+      object-fit: contain;
+      align-self: flex-start;
+      flex-shrink: 0;
     }
 
     span {

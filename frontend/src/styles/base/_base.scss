@@ -68,3 +68,13 @@ h1, h2, h3, .font-integral {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
+// Global stars aspect ratio protection
+.stars {
+  max-width: 6.5rem;
+  height: 1.1875rem;
+  width: auto;
+  object-fit: contain;
+  align-self: flex-start;
+  flex-shrink: 0;
+}

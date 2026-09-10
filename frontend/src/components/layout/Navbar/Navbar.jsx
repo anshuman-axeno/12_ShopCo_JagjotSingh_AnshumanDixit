@@ -36,7 +36,7 @@ function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Sync search input with URL search param
+  //search input = URL search param
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const q = params.get('search') || '';
