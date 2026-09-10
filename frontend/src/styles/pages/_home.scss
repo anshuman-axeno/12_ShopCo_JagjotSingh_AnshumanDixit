@@ -3,9 +3,33 @@
 
 // Hero Section
 .hero {
-  background-color: $cream;
+  background-color: #f2f0f1;
+  background-image: url("/assets/images/Rectangle 2.png");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: auto 100%;
   position: relative;
   overflow: hidden;
+
+  &__star {
+    position: absolute;
+    pointer-events: none;
+    z-index: 3;
+
+    &--big {
+      top: 5rem;
+      right: 5.5rem;
+      width: 6.5rem;
+      height: 6.5rem;
+    }
+
+    &--small {
+      top: 18.5rem;
+      right: 39rem;
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+  }
 
   &__container {
     width: $container-width;
@@ -13,39 +37,43 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 38rem;
-    padding-top: 2rem;
+    min-height: 41.5rem;
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+    position: relative;
+    z-index: 2;
   }
 
   &__content {
-    flex: 1;
-    max-width: 36rem;
+    flex: 0 0 52%;
+    max-width: 38rem;
     z-index: 2;
   }
 
   &__heading {
     font-family: $font-integral;
-    font-size: 3.75rem;
+    font-size: 3.875rem;
     line-height: 1.05;
     font-weight: 700;
     color: $dark;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
   }
 
   &__para {
     font-size: 1rem;
     color: $gray;
     line-height: 1.6;
-    margin-bottom: 2rem;
+    margin-bottom: 2.25rem;
     max-width: 34rem;
   }
 
   &__btn {
     @include button;
     display: inline-block;
-    padding: 1rem 3.5rem;
+    padding: 1.125rem 4rem;
     font-size: 1rem;
     font-weight: 600;
+    border-radius: 62px;
     margin-bottom: 3rem;
   }
 
@@ -60,7 +88,7 @@
 
       h3 {
         font-family: $font-satoshi;
-        font-size: 2.25rem;
+        font-size: 2.5rem;
         font-weight: 700;
         color: $dark;
       }
@@ -73,27 +101,18 @@
 
     &-divider {
       width: 0.0625rem;
-      height: 3rem;
+      height: 3.25rem;
       background-color: $border-dark;
     }
   }
 
-  &__image-box {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    position: relative;
-  }
-
-  &__image {
-    max-height: 38rem;
-    width: auto;
-    object-fit: contain;
+  &__mobile-image {
+    display: none;
   }
 
   &__brands {
     background-color: $dark;
-    padding: 2.5rem 0;
+    padding: 2.75rem 0;
 
     &-container {
       width: $container-width;
@@ -102,7 +121,7 @@
       flex-wrap: wrap;
 
       img {
-        height: 2rem;
+        height: 2.25rem;
         width: auto;
         object-fit: contain;
         filter: brightness(0) invert(1);
@@ -116,66 +135,137 @@
     }
   }
 
-  @media (max-width: 1024px) {
-    &__container {
-      width: $ninety;
-    }
+  @media (max-width: 1200px) {
+    background-position: calc(100% + 120px) bottom;
 
     &__heading {
-      font-size: 2.75rem;
+      font-size: 3rem;
+    }
+
+    &__star {
+      &--big {
+        right: 3rem;
+        width: 5.5rem;
+        height: 5.5rem;
+      }
+
+      &--small {
+        right: 30rem;
+      }
+    }
+  }
+
+  @media (max-width: 992px) {
+    background-position: calc(100% + 200px) bottom;
+
+    &__star {
+      &--small {
+        right: 25rem;
+      }
     }
   }
 
   @media (max-width: 768px) {
+    background-image: none;
+
+    &__star {
+      display: none;
+    }
+
     &__container {
       flex-direction: column;
-      text-align: left;
+      align-items: stretch;
       min-height: auto;
-      padding: 2rem 0 0;
+      padding: 2.5rem 0 0;
     }
 
     &__content {
-      max-width: $full;
+      width: 100%;
+      max-width: 100%;
     }
 
     &__heading {
       font-size: 2.25rem;
-      margin-bottom: 1rem;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+
+    &__para {
+      font-size: 0.875rem;
+      margin-bottom: 1.75rem;
     }
 
     &__btn {
-      width: $full;
+      width: 100%;
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.25rem;
+      padding: 1rem 0;
     }
 
     &__stats {
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      justify-items: center;
+      text-align: center;
+      margin-bottom: 1.5rem;
+
+      &-divider {
+        display: none;
+      }
+
+      &-item:last-child {
+        grid-column: 1 / -1;
+      }
 
       &-item h3 {
         font-size: 1.75rem;
       }
+
+      &-item p {
+        font-size: 0.75rem;
+      }
     }
 
-    &__image-box {
-      width: $full;
-      margin-top: 1.5rem;
+    &__mobile-image {
+      display: block;
+      position: relative;
+      width: calc(100% + 10%);
+      margin-left: -5%;
+      height: 28rem;
+      background-image: url("/assets/images/Rectangle 2.png");
+      background-size: cover;
+      background-position: 80% bottom;
+      background-repeat: no-repeat;
     }
 
-    &__image {
-      width: $full;
-      max-height: 25rem;
+    &__mobile-star {
+      position: absolute;
+      pointer-events: none;
+
+      &--big {
+        top: 2rem;
+        right: 1.5rem;
+        width: 4.75rem;
+        height: 4.75rem;
+      }
+
+      &--small {
+        top: 8rem;
+        left: 1.5rem;
+        width: 2.75rem;
+        height: 2.75rem;
+      }
     }
 
     &__brands-container {
-      width: $ninety;
-      gap: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
       justify-content: center;
+      gap: 1.5rem 2.25rem;
 
       img {
-        height: 1.5rem;
+        height: 1.625rem;
       }
     }
   }

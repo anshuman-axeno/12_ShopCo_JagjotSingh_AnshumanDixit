@@ -1,18 +1,32 @@
 import { Link } from 'react-router-dom';
-import heroImg from '../../../assets/images/hero-2.png';
 import brandVersace from '../../../assets/images/brand-1.png';
 import brandCalvin from '../../../assets/images/brand-last.png';
 import brandZara from '../../../assets/images/zara-logo-1 1.png';
 import brandPrada from '../../../assets/images/prada-logo-1 1.png';
 import brandGucci from '../../../assets/images/gucci-logo-1 1.png';
+import starIcon from '../../../assets/images/star.png';
 
 function Hero() {
   return (
     <section className="hero">
+      {/* Desktop floating stars matching Figma */}
+      <img
+        src={starIcon}
+        alt=""
+        className="hero__star hero__star--big"
+        aria-hidden="true"
+      />
+      <img
+        src={starIcon}
+        alt=""
+        className="hero__star hero__star--small"
+        aria-hidden="true"
+      />
+
       <div className="hero__container">
         <div className="hero__content">
           <h1 className="hero__heading">
-            FIND CLOTHES THAT MATCH YOUR STYLE
+            FIND CLOTHES THAT MATCHES YOUR STYLE
           </h1>
           <p className="hero__para">
             Browse through our diverse range of meticulously crafted garments, designed
@@ -40,8 +54,20 @@ function Hero() {
           </div>
         </div>
 
-        <div className="hero__image-box">
-          <img src={heroImg} alt="Models showcasing Shop.co apparel" className="hero__image" />
+        {/* Mobile models showcase with stars (displayed only on mobile) */}
+        <div className="hero__mobile-image">
+          <img
+            src={starIcon}
+            alt=""
+            className="hero__mobile-star hero__mobile-star--big"
+            aria-hidden="true"
+          />
+          <img
+            src={starIcon}
+            alt=""
+            className="hero__mobile-star hero__mobile-star--small"
+            aria-hidden="true"
+          />
         </div>
       </div>
 
@@ -59,4 +85,3 @@ function Hero() {
 }
 
 export default Hero;
-
