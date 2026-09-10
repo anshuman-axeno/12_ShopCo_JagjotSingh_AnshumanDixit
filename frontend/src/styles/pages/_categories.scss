@@ -23,6 +23,12 @@
     font-size: 0.875rem;
   }
 
+  &__error {
+    color: $red;
+    margin-bottom: 1rem;
+    font-size: 0.9375rem;
+  }
+
   &__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

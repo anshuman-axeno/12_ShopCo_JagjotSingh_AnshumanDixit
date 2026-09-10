@@ -34,10 +34,10 @@ function OrderDetailsPage() {
   if (loading) return <Spinner message="Loading order details..." fullScreen />;
   if (error || !order) {
     return (
-      <div className="container" style={{ padding: '4rem 1rem', textAlign: 'center' }}>
+      <div className="container order-details-page__empty">
         <h2>Order Not Found</h2>
-        <p style={{ color: '#737373', margin: '1rem 0' }}>{error || 'Cannot retrieve this order.'}</p>
-        <Link to="/profile" style={{ textDecoration: 'underline', fontWeight: 600 }}>
+        <p>{error || 'Cannot retrieve this order.'}</p>
+        <Link to="/profile">
           ← Back to Account Orders
         </Link>
       </div>
@@ -62,7 +62,7 @@ function OrderDetailsPage() {
       <div className="order-details-page__header">
         <div>
           <h1>ORDER #{order._id.slice(-6).toUpperCase()}</h1>
-          <p style={{ color: '#737373', fontSize: '0.875rem', marginTop: '0.25rem' }}>
+          <p className="order-details-page__date">
             Placed on {dateFormatted}
           </p>
         </div>
@@ -111,13 +111,13 @@ function OrderDetailsPage() {
             ))}
           </div>
 
-          <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #e5e7eb' }}>
+          <div className="order-details-page__totals">
             <div className="order-details-page__summary-row">
               <span>Subtotal</span>
               <span>${order.subtotal}</span>
             </div>
             {order.discount > 0 && (
-              <div className="order-details-page__summary-row" style={{ color: '#ef4444' }}>
+              <div className="order-details-page__summary-row order-details-page__summary-row--discount">
                 <span>Discount Applied</span>
                 <span>-${order.discount}</span>
               </div>

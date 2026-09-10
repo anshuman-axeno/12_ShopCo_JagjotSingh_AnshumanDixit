@@ -9,14 +9,18 @@ import '../../../styles/components/_footer.scss';
 
 function Footer() {
   const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    if (email.trim()) {
-      setSubscribed(true);
-      setEmail('');
+    if (!email.trim()) {
+      setError('Please fill in all fields.');
+      return;
     }
+    setError('');
+    setSubscribed(true);
+    setEmail('');
   };
 
   return (
@@ -25,20 +29,30 @@ function Footer() {
         <h2 className="footer__newsletter-heading">
           STAY UP TO DATE ABOUT<br />OUR LATEST OFFERS
         </h2>
-        <form className="footer__newsletter-form" onSubmit={handleSubscribe}>
-          <div className="footer__newsletter-input-box">
+        <form className="footer__newsletter-form" onSubmit={handleSubscribe} noValidate>
+          <div className={`footer__newsletter-input-box ${error ? 'footer__newsletter-input-box--error' : ''}`}>
             <input
               type="email"
               placeholder="Enter your email address"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (error) setError('');
+              }}
+              onBlur={() => {
+                if (!email.trim()) setError('Please fill in all fields.');
+              }}
             />
           </div>
           <button type="submit" className="footer__newsletter-btn">
             {subscribed ? 'Subscribed!' : 'Subscribe to Newsletter'}
           </button>
         </form>
+        {error && (
+          <p className="footer__newsletter-error">
+            {error}
+          </p>
+        )}
       </div>
 
       <div className="footer__main">

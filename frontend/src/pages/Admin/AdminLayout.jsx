@@ -7,7 +7,7 @@ function AdminLayout() {
       <div className="admin-layout__header">
         <div>
           <h1>ADMIN DASHBOARD</h1>
-          <p style={{ color: '#737373', fontSize: '0.875rem' }}>
+          <p>
             Store Management & Inventory Control
           </p>
         </div>

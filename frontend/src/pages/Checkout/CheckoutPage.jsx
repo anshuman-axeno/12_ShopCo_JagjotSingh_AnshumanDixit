@@ -20,6 +20,7 @@ function CheckoutPage() {
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
 
   // Prefill shipping info from user profile
   useEffect(() => {
@@ -35,12 +36,12 @@ function CheckoutPage() {
   // If cart is empty, redirect back to cart
   if (cart.length === 0) {
     return (
-      <div className="container" style={{ padding: '4rem 1rem', textAlign: 'center' }}>
+      <div className="container checkout-page__empty">
         <h2>Your Cart is Empty</h2>
-        <p style={{ color: '#737373', margin: '1rem 0' }}>
+        <p>
           Please add items to your cart before proceeding to checkout.
         </p>
-        <Link to="/products" style={{ textDecoration: 'underline', fontWeight: 600 }}>
+        <Link to="/products">
           Go to Shop
         </Link>
       </div>
@@ -50,17 +51,28 @@ function CheckoutPage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => ({ ...prev, [name]: '' }));
+    }
+    if (error) setError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    if (!formData.name.trim() || !formData.phone.trim() || !formData.address.trim()) {
-      setError('Please fill in all shipping details.');
+    const errors = {};
+    if (!formData.name?.trim()) errors.name = 'Please fill this field';
+    if (!formData.phone?.trim()) errors.phone = 'Please fill this field';
+    if (!formData.address?.trim()) errors.address = 'Please fill this field';
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setError('Please fill in all fields.');
       return;
     }
 
+    setFieldErrors({});
     setSubmitting(true);
 
     try {
@@ -104,18 +116,24 @@ function CheckoutPage() {
         {/* Shipping Form */}
         <div className="checkout-page__form-box">
           <h3>Shipping & Delivery Information</h3>
-          <form className="checkout-page__form" onSubmit={handleSubmit}>
+          <form className="checkout-page__form" onSubmit={handleSubmit} noValidate>
             <div className="checkout-page__field">
               <label htmlFor="name">Full Name *</label>
               <input
                 id="name"
                 name="name"
                 type="text"
-                required
                 value={formData.name}
                 onChange={handleChange}
+                onBlur={() => handleBlur('name')}
                 placeholder="John Doe"
+                className={fieldErrors.name ? 'checkout-page__field-input--error' : ''}
               />
+              {fieldErrors.name && (
+                <span className="checkout-page__field-error">
+                  {fieldErrors.name}
+                </span>
+              )}
             </div>
 
             <div className="checkout-page__field">
@@ -124,11 +142,17 @@ function CheckoutPage() {
                 id="phone"
                 name="phone"
                 type="tel"
-                required
                 value={formData.phone}
                 onChange={handleChange}
+                onBlur={() => handleBlur('phone')}
                 placeholder="9876543210"
+                className={fieldErrors.phone ? 'checkout-page__field-input--error' : ''}
               />
+              {fieldErrors.phone && (
+                <span className="checkout-page__field-error">
+                  {fieldErrors.phone}
+                </span>
+              )}
             </div>
 
             <div className="checkout-page__field">
@@ -136,12 +160,24 @@ function CheckoutPage() {
               <textarea
                 id="address"
                 name="address"
-                required
                 value={formData.address}
                 onChange={handleChange}
+                onBlur={() => handleBlur('address')}
                 placeholder="Street address, city, state, zip code"
+                className={fieldErrors.address ? 'checkout-page__field-input--error' : ''}
               />
+              {fieldErrors.address && (
+                <span className="checkout-page__field-error">
+                  {fieldErrors.address}
+                </span>
+              )}
             </div>
+
+            {error && (
+              <p className="checkout-page__form-error">
+                {error}
+              </p>
+            )}
 
             <button
               type="submit"
@@ -177,7 +213,7 @@ function CheckoutPage() {
           </div>
 
           {discountAmount > 0 && (
-            <div className="checkout-page__row" style={{ color: '#ef4444' }}>
+            <div className="checkout-page__row checkout-page__row--discount">
               <span>Discount ({couponCode})</span>
               <span>-${discountAmount.toFixed(2)}</span>
             </div>

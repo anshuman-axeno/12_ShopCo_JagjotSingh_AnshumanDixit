@@ -9,7 +9,6 @@ import starIcon from '../../../assets/images/star.png';
 function Hero() {
   return (
     <section className="hero">
-      {/* Desktop floating stars matching Figma */}
       <img
         src={starIcon}
         alt=""
@@ -26,7 +25,7 @@ function Hero() {
       <div className="hero__container">
         <div className="hero__content">
           <h1 className="hero__heading">
-            FIND CLOTHES THAT MATCHES YOUR STYLE
+            FIND CLOTHES THAT MATCH YOUR STYLE
           </h1>
           <p className="hero__para">
             Browse through our diverse range of meticulously crafted garments, designed
@@ -54,7 +53,6 @@ function Hero() {
           </div>
         </div>
 
-        {/* Mobile models showcase with stars (displayed only on mobile) */}
         <div className="hero__mobile-image">
           <img
             src={starIcon}

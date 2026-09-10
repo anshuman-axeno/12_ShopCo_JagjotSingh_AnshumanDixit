@@ -10,6 +10,7 @@ function AdminCategories() {
   const [nameInput, setNameInput] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const [formError, setFormError] = useState('');
 
   const loadCategories = async () => {
     try {
@@ -30,12 +31,14 @@ function AdminCategories() {
   const openAddModal = () => {
     setEditingCategory(null);
     setNameInput('');
+    setFormError('');
     setModalOpen(true);
   };
 
   const openEditModal = (cat) => {
     setEditingCategory(cat);
     setNameInput(cat.name);
+    setFormError('');
     setModalOpen(true);
   };
 
@@ -52,7 +55,12 @@ function AdminCategories() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!nameInput.trim()) return;
+    setFormError('');
+
+    if (!nameInput.trim()) {
+      setFormError('Please fill in all fields.');
+      return;
+    }
 
     setSaving(true);
     try {
@@ -84,7 +92,7 @@ function AdminCategories() {
         <button onClick={openAddModal}>+ Add New Category</button>
       </div>
 
-      {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
+      {error && <p className="admin-layout__error">{error}</p>}
 
       <div className="admin-layout__table-wrapper">
         <table className="admin-layout__table">
@@ -98,7 +106,7 @@ function AdminCategories() {
           <tbody>
             {categories.map((cat) => (
               <tr key={cat._id}>
-                <td style={{ color: '#737373', fontSize: '0.8125rem' }}>{cat._id}</td>
+                <td className="admin-layout__table-id">{cat._id}</td>
                 <td>
                   <strong>{cat.name}</strong>
                 </td>
@@ -126,16 +134,27 @@ function AdminCategories() {
         <div className="admin-layout__modal-backdrop">
           <div className="admin-layout__modal">
             <h3>{editingCategory ? 'Edit Category' : 'Add New Category'}</h3>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} noValidate>
               <div className="admin-layout__form-field">
                 <label>Category Name *</label>
                 <input
                   type="text"
-                  required
                   placeholder="e.g. Shoes, Hoodies, Accessories"
                   value={nameInput}
-                  onChange={(e) => setNameInput(e.target.value)}
+                  onChange={(e) => {
+                    setNameInput(e.target.value);
+                    if (formError) setFormError('');
+                  }}
+                  onBlur={() => {
+                    if (!nameInput.trim()) setFormError('Please fill this field');
+                  }}
+                  className={formError ? 'admin-layout__input--error' : ''}
                 />
+                {formError && (
+                  <p className="admin-layout__field-error">
+                    {formError}
+                  </p>
+                )}
               </div>
 
               <div className="admin-layout__modal-actions">

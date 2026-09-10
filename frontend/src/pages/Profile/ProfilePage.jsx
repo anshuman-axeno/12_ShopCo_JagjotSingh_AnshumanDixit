@@ -18,6 +18,7 @@ function ProfilePage() {
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
 
   useEffect(() => {
     if (user) {
@@ -52,12 +53,29 @@ function ProfilePage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => ({ ...prev, [name]: '' }));
+    }
+    if (feedback) setFeedback(null);
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    setSaving(true);
     setFeedback(null);
+
+    const errors = {};
+    if (!formData.name?.trim()) errors.name = 'Please fill this field';
+    if (!String(formData.phone)?.trim()) errors.phone = 'Please fill this field';
+    if (!formData.address?.trim()) errors.address = 'Please fill this field';
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setFeedback({ success: false, message: 'Please fill in all fields.' });
+      return;
+    }
+
+    setFieldErrors({});
+    setSaving(true);
 
     try {
       await updateProfile({
@@ -96,7 +114,7 @@ function ProfilePage() {
         <div className="profile-page__card">
           <h3>Profile Details</h3>
 
-          <form onSubmit={handleUpdate}>
+          <form onSubmit={handleUpdate} noValidate>
             <div className="profile-page__field">
               <label>Role</label>
               <div>
@@ -104,16 +122,7 @@ function ProfilePage() {
                   {user?.role || 'Customer'}
                 </span>
                 {isAdmin && (
-                  <Link
-                    to="/admin"
-                    style={{
-                      marginLeft: '0.75rem',
-                      fontSize: '0.8125rem',
-                      color: '#000',
-                      fontWeight: 700,
-                      textDecoration: 'underline',
-                    }}
-                  >
+                  <Link to="/admin" className="profile-page__admin-link">
                     Go to Admin Dashboard →
                   </Link>
                 )}
@@ -131,10 +140,16 @@ function ProfilePage() {
                 id="name"
                 name="name"
                 type="text"
-                required
                 value={formData.name}
                 onChange={handleChange}
+                onBlur={() => handleBlur('name')}
+                className={fieldErrors.name ? 'profile-page__field-input--error' : ''}
               />
+              {fieldErrors.name && (
+                <span className="profile-page__field-error">
+                  {fieldErrors.name}
+                </span>
+              )}
             </div>
 
             <div className="profile-page__field">
@@ -143,10 +158,16 @@ function ProfilePage() {
                 id="phone"
                 name="phone"
                 type="tel"
-                required
                 value={formData.phone}
                 onChange={handleChange}
+                onBlur={() => handleBlur('phone')}
+                className={fieldErrors.phone ? 'profile-page__field-input--error' : ''}
               />
+              {fieldErrors.phone && (
+                <span className="profile-page__field-error">
+                  {fieldErrors.phone}
+                </span>
+              )}
             </div>
 
             <div className="profile-page__field">
@@ -154,10 +175,16 @@ function ProfilePage() {
               <textarea
                 id="address"
                 name="address"
-                required
                 value={formData.address}
                 onChange={handleChange}
+                onBlur={() => handleBlur('address')}
+                className={fieldErrors.address ? 'profile-page__field-input--error' : ''}
               />
+              {fieldErrors.address && (
+                <span className="profile-page__field-error">
+                  {fieldErrors.address}
+                </span>
+              )}
             </div>
 
             <button type="submit" className="profile-page__save-btn" disabled={saving}>
@@ -185,7 +212,7 @@ function ProfilePage() {
           {loadingOrders ? (
             <Spinner message="Loading orders..." />
           ) : orders.length === 0 ? (
-            <p style={{ color: '#737373', padding: '2rem 0', textAlign: 'center' }}>
+            <p className="profile-page__empty-orders">
               You have no past orders yet.
             </p>
           ) : (
@@ -202,7 +229,7 @@ function ProfilePage() {
                     <div className="profile-page__order-card-header">
                       <div>
                         <strong>Order #{order._id.slice(-6).toUpperCase()}</strong>
-                        <span style={{ marginLeft: '0.75rem' }}>{dateStr}</span>
+                        <span className="profile-page__order-date">{dateStr}</span>
                       </div>
                       <span
                         className={`profile-page__order-card-status ${getStatusClass(

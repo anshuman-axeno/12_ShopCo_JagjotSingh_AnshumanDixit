@@ -139,7 +139,7 @@ function Navbar() {
                       My Profile & Orders
                     </Link>
                     {isAdmin && (
-                      <Link to="/admin" className="navbar__dropdown-item" style={{ fontWeight: 600 }}>
+                      <Link to="/admin" className="navbar__dropdown-item navbar__dropdown-item--admin">
                         Admin Dashboard
                       </Link>
                     )}

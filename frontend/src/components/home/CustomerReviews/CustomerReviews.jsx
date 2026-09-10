@@ -53,7 +53,6 @@ function CustomerReviews() {
   return (
     <section className="customer-reviews">
       <div className="customer-reviews__container">
-        <h2 className="customer-reviews__heading">OUR HAPPY CUSTOMERS</h2>
         <div className="customer-reviews__header">
           <h2 className="customer-reviews__heading">OUR HAPPY CUSTOMERS</h2>
           <div className="customer-reviews__nav">
@@ -76,7 +75,6 @@ function CustomerReviews() {
           </div>
         </div>
 
-        <div className="customer-reviews__grid">
         <div className="customer-reviews__grid" ref={scrollRef}>
           {REVIEWS.map((rev) => (
             <article key={rev.id} className="customer-reviews__card">

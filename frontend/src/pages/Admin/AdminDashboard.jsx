@@ -28,7 +28,7 @@ function AdminDashboard() {
   }, []);
 
   if (loading) return <Spinner message="Loading dashboard statistics..." />;
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (error) return <p className="admin-layout__error">{error}</p>;
 
   const hasLowStockAlert = (stats?.lowStock || 0) > 0 || (stats?.outOfStock || 0) > 0;
 
@@ -40,7 +40,7 @@ function AdminDashboard() {
           <p>
             You currently have <strong>{stats?.outOfStock || 0}</strong> out-of-stock products
             and <strong>{stats?.lowStock || 0}</strong> products at low stock (quantity ≤ 10).{' '}
-            <Link to="/admin/products" style={{ fontWeight: 700, textDecoration: 'underline' }}>
+            <Link to="/admin/products">
               Manage Inventory →
             </Link>
           </p>

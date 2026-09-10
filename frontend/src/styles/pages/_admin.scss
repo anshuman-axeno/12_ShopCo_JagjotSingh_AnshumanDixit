@@ -18,11 +18,22 @@
       color: $dark;
     }
 
+    p {
+      color: $gray;
+      font-size: 0.875rem;
+    }
+
     a {
       font-size: 0.875rem;
       font-weight: 600;
       text-decoration: underline;
     }
+  }
+
+  &__error {
+    color: $red;
+    margin-bottom: 1rem;
+    font-size: 0.9375rem;
   }
 
   &__nav {
@@ -122,6 +133,12 @@
     p {
       color: #78350f;
       font-size: 0.875rem;
+
+      a {
+        font-weight: 700;
+        text-decoration: underline;
+        color: #78350f;
+      }
     }
   }
 
@@ -205,6 +222,108 @@
       &:hover {
         background-color: #fca5a5;
       }
+    }
+  }
+
+  &__product-thumb {
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: contain;
+    border-radius: $round1;
+    background-color: $cream;
+  }
+
+  &__table-id {
+    color: $gray;
+    font-size: 0.8125rem;
+  }
+
+  &__table-subtext {
+    color: $gray;
+    font-size: 0.75rem;
+  }
+
+  &__status-cell {
+    text-transform: capitalize;
+  }
+
+  &__stock-badge {
+    padding: 0.2rem 0.5rem;
+    border-radius: $round-max;
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    &--out {
+      color: $red-dark;
+      background-color: $red-light;
+    }
+
+    &--low {
+      color: $yellow-dark;
+      background-color: $yellow-light;
+    }
+
+    &--in {
+      color: $green-dark;
+      font-weight: 600;
+    }
+  }
+
+  &__status-select {
+    border: 0.0625rem solid $border-dark;
+    border-radius: $round-max;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8125rem;
+    background-color: $light;
+    font-family: $font-satoshi;
+  }
+
+  &__link {
+    font-size: 0.8125rem;
+    color: $dark;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  &__form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  &__input--error {
+    border-color: $red !important;
+    outline-color: $red !important;
+  }
+
+  &__field-error {
+    color: $red;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  &__form-error {
+    color: $red;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0.5rem 0;
+    display: block;
+  }
+
+  &__url-fallback {
+    margin-top: 0.5rem;
+
+    label {
+      font-size: 0.75rem;
+      color: $gray;
+    }
+
+    input {
+      margin-top: 0.25rem;
+      font-size: 0.8125rem;
     }
   }
 

@@ -8,14 +8,14 @@ function ProductCard({ product }) {
 
   const { _id, name, price, rating = 4.5, quantity = 0, images = [] } = product;
 
-  // Image source fallback
+  // if no image
   const imageSrc = images && images.length > 0 ? images[0] : '/assets/images/tshirt1.png';
 
   // Stock status
   const isOutOfStock = quantity === 0;
   const isLowStock = quantity > 0 && quantity <= 10;
 
-  // Calculate simulated original price and discount for visual appeal
+  
   const hasDiscount = price > 150;
   const oldPrice = hasDiscount ? Math.round(price * 1.2) : null;
   const discountPercent = hasDiscount ? 20 : null;
@@ -60,6 +60,6 @@ function ProductCard({ product }) {
   );
 }
 
-// Wrap with React.memo to avoid re-renders when parent state updates
+// using react memo to avoid re-renders
 export default memo(ProductCard);
 

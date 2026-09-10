@@ -58,12 +58,43 @@
         background-color: $cream;
         cursor: not-allowed;
       }
+
+      &--error {
+        border-color: $red !important;
+        outline-color: $red !important;
+      }
     }
 
     textarea {
       resize: vertical;
       min-height: 4.5rem;
     }
+  }
+
+  &__field-error {
+    color: $red;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  &__admin-link {
+    margin-left: 0.75rem;
+    font-size: 0.8125rem;
+    color: $dark;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  &__empty-orders {
+    color: $gray;
+    padding: 2rem 0;
+    text-align: center;
+  }
+
+  &__order-date {
+    margin-left: 0.75rem;
   }
 
   &__role-badge {

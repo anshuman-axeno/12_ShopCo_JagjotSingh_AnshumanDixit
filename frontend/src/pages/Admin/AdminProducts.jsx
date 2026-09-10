@@ -10,6 +10,8 @@ function AdminProducts() {
   const [editingProduct, setEditingProduct] = useState(null);
   const [error, setError] = useState('');
   const [uploadError, setUploadError] = useState('');
+  const [formError, setFormError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
   const [saving, setSaving] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -45,6 +47,8 @@ function AdminProducts() {
   const openAddModal = () => {
     setEditingProduct(null);
     setUploadError('');
+    setFormError('');
+    setFieldErrors({});
     setFormData({
       name: '',
       description: '',
@@ -60,6 +64,8 @@ function AdminProducts() {
   const openEditModal = (product) => {
     setEditingProduct(product);
     setUploadError('');
+    setFormError('');
+    setFieldErrors({});
     setFormData({
       name: product.name,
       description: product.description,
@@ -135,6 +141,22 @@ function AdminProducts() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormError('');
+
+    const errors = {};
+    if (!formData.name?.trim()) errors.name = 'Please fill this field';
+    if (!formData.description?.trim()) errors.description = 'Please fill this field';
+    if (!String(formData.price)?.trim()) errors.price = 'Please fill this field';
+    if (!String(formData.quantity)?.trim()) errors.quantity = 'Please fill this field';
+    if (!formData.category?.trim()) errors.category = 'Please fill this field';
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setFormError('Please fill in all fields.');
+      return;
+    }
+
+    setFieldErrors({});
     setSaving(true);
 
     try {
@@ -187,7 +209,7 @@ function AdminProducts() {
         <button onClick={openAddModal}>+ Add New Product</button>
       </div>
 
-      {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
+      {error && <p className="admin-layout__error">{error}</p>}
 
       <div className="admin-layout__table-wrapper">
         <table className="admin-layout__table">
@@ -215,7 +237,7 @@ function AdminProducts() {
                     <img
                       src={img}
                       alt={prod.name}
-                      style={{ width: '2.5rem', height: '2.5rem', objectFit: 'contain', borderRadius: '0.25rem', backgroundColor: '#f0eeed' }}
+                      className="admin-layout__product-thumb"
                     />
                   </td>
                   <td>
@@ -228,20 +250,20 @@ function AdminProducts() {
                   </td>
                   <td>
                     {isOut ? (
-                      <span style={{ color: '#b91c1c', fontWeight: 700, backgroundColor: '#fee2e2', padding: '0.2rem 0.5rem', borderRadius: '1rem', fontSize: '0.75rem' }}>
+                      <span className="admin-layout__stock-badge admin-layout__stock-badge--out">
                         OUT OF STOCK
                       </span>
                     ) : isLow ? (
-                      <span style={{ color: '#b45309', fontWeight: 700, backgroundColor: '#fef3c7', padding: '0.2rem 0.5rem', borderRadius: '1rem', fontSize: '0.75rem' }}>
+                      <span className="admin-layout__stock-badge admin-layout__stock-badge--low">
                         LOW STOCK (≤ 10)
                       </span>
                     ) : (
-                      <span style={{ color: '#047857', fontWeight: 600, fontSize: '0.75rem' }}>
+                      <span className="admin-layout__stock-badge admin-layout__stock-badge--in">
                         In Stock
                       </span>
                     )}
                   </td>
-                  <td style={{ textTransform: 'capitalize' }}>{prod.status}</td>
+                  <td className="admin-layout__status-cell">{prod.status}</td>
                   <td>
                     <button
                       className="admin-layout__action-btn admin-layout__action-btn--edit"
@@ -268,37 +290,67 @@ function AdminProducts() {
         <div className="admin-layout__modal-backdrop">
           <div className="admin-layout__modal">
             <h3>{editingProduct ? 'Edit Product' : 'Add New Product'}</h3>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} noValidate>
               <div className="admin-layout__form-field">
                 <label>Product Name *</label>
                 <input
                   type="text"
-                  required
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) => {
+                    setFormData({ ...formData, name: e.target.value });
+                    if (fieldErrors.name) setFieldErrors((prev) => ({ ...prev, name: '' }));
+                    if (formError) setFormError('');
+                  }}
+                  onBlur={() => handleBlur('name')}
+                  className={fieldErrors.name ? 'admin-layout__input--error' : ''}
                 />
+                {fieldErrors.name && (
+                  <span className="admin-layout__field-error">
+                    {fieldErrors.name}
+                  </span>
+                )}
               </div>
 
               <div className="admin-layout__form-field">
                 <label>Description *</label>
                 <textarea
-                  required
                   value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  onChange={(e) => {
+                    setFormData({ ...formData, description: e.target.value });
+                    if (fieldErrors.description) setFieldErrors((prev) => ({ ...prev, description: '' }));
+                    if (formError) setFormError('');
+                  }}
+                  onBlur={() => handleBlur('description')}
+                  className={fieldErrors.description ? 'admin-layout__input--error' : ''}
                 />
+                {fieldErrors.description && (
+                  <span className="admin-layout__field-error">
+                    {fieldErrors.description}
+                  </span>
+                )}
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className="admin-layout__form-grid-2">
                 <div className="admin-layout__form-field">
                   <label>Price ($) *</label>
                   <input
                     type="number"
                     step="0.01"
                     min="0"
-                    required
                     value={formData.price}
-                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                    onChange={(e) => {
+                      setFormData({ ...formData, price: e.target.value });
+                      if (fieldErrors.price) setFieldErrors((prev) => ({ ...prev, price: '' }));
+                      if (formError) setFormError('');
+                    }}
+                    onBlur={() => handleBlur('price')}
+                    className={fieldErrors.price ? 'admin-layout__input--error' : ''}
                   />
+                  {fieldErrors.price && (
+                    <span className="admin-layout__field-error">
+                      {fieldErrors.price}
+                    </span>
+                  )}
                 </div>
 
                 <div className="admin-layout__form-field">
@@ -306,27 +358,48 @@ function AdminProducts() {
                   <input
                     type="number"
                     min="0"
-                    required
                     value={formData.quantity}
-                    onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+                    onChange={(e) => {
+                      setFormData({ ...formData, quantity: e.target.value });
+                      if (fieldErrors.quantity) setFieldErrors((prev) => ({ ...prev, quantity: '' }));
+                      if (formError) setFormError('');
+                    }}
+                    onBlur={() => handleBlur('quantity')}
+                    className={fieldErrors.quantity ? 'admin-layout__input--error' : ''}
                   />
+                  {fieldErrors.quantity && (
+                    <span className="admin-layout__field-error">
+                      {fieldErrors.quantity}
+                    </span>
+                  )}
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className="admin-layout__form-grid-2">
                 <div className="admin-layout__form-field">
                   <label>Category *</label>
                   <select
                     value={formData.category}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    required
+                    onChange={(e) => {
+                      setFormData({ ...formData, category: e.target.value });
+                      if (fieldErrors.category) setFieldErrors((prev) => ({ ...prev, category: '' }));
+                      if (formError) setFormError('');
+                    }}
+                    onBlur={() => handleBlur('category')}
+                    className={fieldErrors.category ? 'admin-layout__input--error' : ''}
                   >
+                    <option value="">-- Select Category --</option>
                     {categories.map((c) => (
                       <option key={c._id} value={c._id}>
                         {c.name}
                       </option>
                     ))}
                   </select>
+                  {fieldErrors.category && (
+                    <span className="admin-layout__field-error">
+                      {fieldErrors.category}
+                    </span>
+                  )}
                 </div>
 
                 <div className="admin-layout__form-field">
@@ -370,13 +443,13 @@ function AdminProducts() {
                 )}
 
                 {uploadError && (
-                  <p style={{ color: '#b91c1c', fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                  <p className="admin-layout__field-error">
                     {uploadError}
                   </p>
                 )}
 
-                <div style={{ marginTop: '0.5rem' }}>
-                  <label style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+                <div className="admin-layout__url-fallback">
+                  <label>
                     {formData.image && formData.image.startsWith('data:image')
                       ? 'Image loaded from your PC (Base64). Click ✕ to change or remove.'
                       : 'Or enter image URL path directly:'}
@@ -387,11 +460,16 @@ function AdminProducts() {
                       value={formData.image}
                       onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                       placeholder="e.g. /assets/images/tshirt1.png"
-                      style={{ marginTop: '0.25rem', fontSize: '0.8125rem' }}
                     />
                   )}
                 </div>
               </div>
+
+              {formError && (
+                <p className="admin-layout__form-error">
+                  {formError}
+                </p>
+              )}
 
               <div className="admin-layout__modal-actions">
                 <button

@@ -7,6 +7,7 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   const { login } = useAuth();
@@ -18,10 +19,22 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    const errors = {};
+    if (!email.trim()) errors.email = 'Please fill this field';
+    if (!password.trim()) errors.password = 'Please fill this field';
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setError('Please fill in all fields.');
+      return;
+    }
+
+    setFieldErrors({});
     setLoading(true);
 
     try {
-      await login(email, password);
+      await login(email.trim(), password);
       navigate(from, { replace: true });
     } catch (err) {
       setError(err.message || 'Invalid email or password');
@@ -40,17 +53,26 @@ function LoginPage() {
 
         {error && <div className="auth-page__error">{error}</div>}
 
-        <form className="auth-page__form" onSubmit={handleSubmit}>
+        <form className="auth-page__form" onSubmit={handleSubmit} noValidate>
           <div className="auth-page__field">
             <label htmlFor="email">Email Address</label>
             <input
               id="email"
               type="email"
-              required
               placeholder="yourname@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (fieldErrors.email) setFieldErrors((prev) => ({ ...prev, email: '' }));
+                if (error) setError('');
+              }}
+              className={fieldErrors.email ? 'auth-page__input--error' : ''}
             />
+            {fieldErrors.email && (
+              <span className="auth-page__field-error">
+                {fieldErrors.email}
+              </span>
+            )}
           </div>
 
           <div className="auth-page__field">
@@ -58,12 +80,28 @@ function LoginPage() {
             <input
               id="password"
               type="password"
-              required
               placeholder="••••••••"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (fieldErrors.password) setFieldErrors((prev) => ({ ...prev, password: '' }));
+                if (error) setError('');
+              }}
+              onBlur={() => handleBlur('password')}
+              className={fieldErrors.password ? 'auth-page__input--error' : ''}
             />
+            {fieldErrors.password && (
+              <span className="auth-page__field-error">
+                {fieldErrors.password}
+              </span>
+            )}
           </div>
+
+          {error && (
+            <p className="auth-page__form-error">
+              {error}
+            </p>
+          )}
 
           <button type="submit" className="auth-page__submit-btn" disabled={loading}>
             {loading ? 'Logging In...' : 'Log In'}

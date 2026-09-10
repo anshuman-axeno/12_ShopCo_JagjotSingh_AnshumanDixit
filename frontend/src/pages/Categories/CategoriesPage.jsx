@@ -49,7 +49,7 @@ function CategoriesPage() {
         )}
       </div>
 
-      {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
+      {error && <p className="categories-page__error">{error}</p>}
 
       {categories.length === 0 ? (
         <p>No categories found.</p>

@@ -55,7 +55,7 @@ function AdminOrders() {
         <h2>Customer Orders ({orders.length})</h2>
       </div>
 
-      {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
+      {error && <p className="admin-layout__error">{error}</p>}
 
       {orders.length === 0 ? (
         <p>No orders found in the database.</p>
@@ -89,7 +89,7 @@ function AdminOrders() {
                     <td>
                       <div>
                         <strong>{ord.user?.name || ord.shippingInfo?.name || 'Customer'}</strong>
-                        <div style={{ color: '#737373', fontSize: '0.75rem' }}>
+                        <div className="admin-layout__table-subtext">
                           {ord.user?.email || ord.shippingInfo?.phone}
                         </div>
                       </div>
@@ -106,13 +106,7 @@ function AdminOrders() {
                         value={ord.orderStatus}
                         disabled={updatingId === ord._id}
                         onChange={(e) => handleStatusChange(ord._id, e.target.value)}
-                        style={{
-                          border: '1px solid #d1d5db',
-                          borderRadius: '1rem',
-                          padding: '0.35rem 0.75rem',
-                          fontSize: '0.8125rem',
-                          backgroundColor: '#fff',
-                        }}
+                        className="admin-layout__status-select"
                       >
                         {STATUS_OPTIONS.map((st) => (
                           <option key={st} value={st}>
@@ -124,12 +118,7 @@ function AdminOrders() {
                     <td>
                       <Link
                         to={`/orders/${ord._id}`}
-                        style={{
-                          fontSize: '0.8125rem',
-                          color: '#000',
-                          fontWeight: 600,
-                          textDecoration: 'underline',
-                        }}
+                        className="admin-layout__link"
                       >
                         View Details
                       </Link>

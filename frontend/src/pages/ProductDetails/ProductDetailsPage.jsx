@@ -9,9 +9,9 @@ import starImg from '../../assets/images/Frame 10.png';
 import '../../styles/pages/_product-details.scss';
 
 const COLORS = [
-  { name: 'Olive Green', hex: '#4f4631' },
-  { name: 'Forest Green', hex: '#314f4a' },
-  { name: 'Navy Blue', hex: '#31344F' },
+  { name: 'Olive Green', modifier: 'product-details__color-btn--olive' },
+  { name: 'Forest Green', modifier: 'product-details__color-btn--forest' },
+  { name: 'Navy Blue', modifier: 'product-details__color-btn--navy' },
 ];
 
 const SIZES = ['Small', 'Medium', 'Large', 'X-Large'];
@@ -68,10 +68,10 @@ function ProductDetailsPage() {
   if (loading) return <Spinner message="Loading product details..." fullScreen />;
   if (error || !product) {
     return (
-      <div className="container" style={{ padding: '4rem 1rem', textAlign: 'center' }}>
+      <div className="container product-details__empty">
         <h2>Product Not Found</h2>
-        <p style={{ color: '#737373', margin: '1rem 0' }}>{error || 'The requested product does not exist.'}</p>
-        <Link to="/products" style={{ textDecoration: 'underline', fontWeight: 600 }}>
+        <p>{error || 'The requested product does not exist.'}</p>
+        <Link to="/products">
           ← Back to All Products
         </Link>
       </div>
@@ -167,7 +167,7 @@ function ProductDetailsPage() {
             </div>
             <div className="product-details__meta-row">
               <strong>Status:</strong>
-              <span style={{ textTransform: 'capitalize' }}>{product.status || 'Active'}</span>
+              <span className="capitalize">{product.status || 'Active'}</span>
             </div>
           </div>
 
@@ -178,10 +178,9 @@ function ProductDetailsPage() {
               {COLORS.map((c) => (
                 <button
                   key={c.name}
-                  className={`product-details__color-btn ${
+                  className={`product-details__color-btn ${c.modifier} ${
                     selectedColor === c.name ? 'selected' : ''
                   }`}
-                  style={{ backgroundColor: c.hex }}
                   onClick={() => setSelectedColor(c.name)}
                   aria-label={c.name}
                 />

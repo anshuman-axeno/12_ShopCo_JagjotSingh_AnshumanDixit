@@ -66,7 +66,6 @@
     margin-bottom: 1rem;
 
     .stars {
-      height: 1.125rem;
       height: 1.1875rem;
       width: auto;
       max-width: 6.5rem;
@@ -198,6 +197,34 @@
       color: $light;
       font-size: 0.875rem;
       font-weight: 700;
+    }
+
+    &--olive {
+      background-color: #4f4631;
+    }
+
+    &--forest {
+      background-color: #314f4a;
+    }
+
+    &--navy {
+      background-color: #31344F;
+    }
+  }
+
+  &__empty {
+    padding: 4rem 1rem;
+    text-align: center;
+
+    p {
+      color: $gray;
+      margin: 1rem 0;
+    }
+
+    a {
+      text-decoration: underline;
+      font-weight: 600;
+      color: $dark;
     }
   }
 

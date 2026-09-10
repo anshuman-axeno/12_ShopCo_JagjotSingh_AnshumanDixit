@@ -275,15 +275,7 @@ function ProductListingPage() {
             </div>
             <button
               onClick={handlePriceApply}
-              style={{
-                marginTop: '0.75rem',
-                fontSize: '0.8125rem',
-                padding: '0.4rem 1rem',
-                borderRadius: '2rem',
-                backgroundColor: '#000',
-                color: '#fff',
-                width: '100%',
-              }}
+              className="products-page__filter-apply-btn"
             >
               Apply Price
             </button>
@@ -367,7 +359,7 @@ function ProductListingPage() {
             />
           </div>
 
-          {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
+          {error && <p className="products-page__error">{error}</p>}
 
           {loading ? (
             <Spinner message="Fetching products..." />

@@ -63,7 +63,32 @@
       &:focus {
         border-color: $dark;
       }
+
+      &--error {
+        border-color: $red !important;
+        outline-color: $red !important;
+
+        &:focus {
+          border-color: $red !important;
+        }
+      }
     }
+  }
+
+  &__field-error {
+    color: $red;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  &__form-error {
+    color: $red;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0.25rem 0;
   }
 
   &__submit-btn {

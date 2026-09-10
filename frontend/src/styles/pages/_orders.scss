@@ -17,6 +17,28 @@
     }
   }
 
+  &__empty {
+    padding: 4rem 1rem;
+    text-align: center;
+
+    p {
+      color: $gray;
+      margin: 1rem 0;
+    }
+
+    a {
+      text-decoration: underline;
+      font-weight: 600;
+      color: $dark;
+    }
+  }
+
+  &__date {
+    color: $gray;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+
   &__header {
     @include flex-between($gap: $ht2);
     margin-bottom: 2rem;
@@ -171,6 +193,12 @@
     }
   }
 
+  &__totals {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 0.0625rem solid $border-color;
+  }
+
   &__summary-row {
     @include flex-between;
     font-size: 0.9375rem;
@@ -180,6 +208,14 @@
     span:last-child {
       color: $dark;
       font-weight: 700;
+    }
+
+    &--discount {
+      color: $red;
+
+      span:last-child {
+        color: $red;
+      }
     }
 
     &--total {
